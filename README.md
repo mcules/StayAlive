@@ -1,82 +1,99 @@
 # Stay Alive
 
-Stay Alive is a lightweight application designed to prevent your status in Microsoft Teams (or similar applications) from marking you as "away" due to inactivity. It accomplishes this by simulating periodic key presses in the background, keeping your status active.
+Stay Alive is a lightweight desktop application designed to prevent your presence status in Microsoft Teams (or similar apps) from switching to "Away" due to inactivity. It achieves this by simulating periodic key presses in the background.
 
 ## Features
 
-- Automatically prevents your status from switching to "away."
-- Customizable time interval between simulated key presses.
-- Ability to select a specific F-Key for simulation.
-- User-friendly settings accessible via a system tray icon.
-- Configurations are saved automatically, so there's no need to reset the app each time.
-
----
-
-## How to Use
-
-1. **Download and Extract**  
-   Simply download the application, extract the files, and run the executable file. There is no installation process required.
-
-2. **Start the Application**  
-   Run the binary file (executable) to launch the application. Upon startup:
-    - A system tray icon for "Stay Alive" will appear.
-    - The app will work silently in the background, emulating key presses based on the configured settings.
-
-3. **Access the Settings**  
-   Right-click or left-click on the "Stay Alive" icon in your system tray and select **Settings** to:
-    - Modify the interval (in seconds) between key presses.
-    - Choose the F-Key that should be simulated.
-    - Save configurations.
-
-4. **Save and Run**  
-   After adjusting settings, press "Save," and the app will immediately apply the changes. These preferences are stored locally in the file `~/.stay_alive_config.json`.
-
----
-
-## Configuration Options
-
-1. **Key Press Interval**  
-   You can customize the time interval between key presses (default: 60 seconds). This can be adjusted to any positive integer in seconds.
-
-2. **Simulated Key**  
-   The application allows you to select from a list of predefined F-Keys (`F13` to `F24`) to simulate during the operation.
-
-3. **Configuration File**  
-   All settings are saved to a JSON file at `~/.stay_alive_config.json`, which you can manually edit if needed.
-
-Example of a configuration file:
-
-```json
-{
-   "interval": 60,
-   "key_code": 4221
-}
-```
+- **Prevent away status automatically:** Simulates key presses in the background to keep your status active.
+- **Customizable time interval:** Users can set the interval (in seconds) between key presses.
+- **Customizable key selection:** Allows choice of function keys (F13 to F24) for simulation.
+- **AutoStart support:** Option to launch the app automatically on system startup.
+- **System Tray integration:** A tray icon provides quick access to settings and app control.
+- **GUI for configuration:** A user-friendly interface to modify the interval, select keys, and enable/disable AutoStart.
+- **Config file storage:** Stores all settings in `~/.stay_alive_config.json`.
 
 ---
 
 ## Requirements
 
-- Tested on Windows operating systems.
-- No additional tools are required to run this program.
+- **Operating System:** Windows (AutoStart functionality uses Windows Registry).
+- **No installation necessary:** The app is portable and requires no additional dependencies.
 
 ---
 
-## How to Stop the Application
+## Installation and Usage
 
-To stop the application:
-1. Locate the "Stay Alive" icon in the system tray.
-2. Right-click on the icon and select **Exit**.
+1. **Launch the application**  
+   Download and extract the executable file, then run it. After startup:
+   - A tray icon appears in the system tray to indicate that "Stay Alive" is active.
+   - The application runs silently in the background.
 
-The app will terminate and no longer simulate key presses.
+2. **Open the configuration settings**  
+   Right-click the tray icon and select **Settings** to:
+   - Adjust the interval (in seconds) for key presses.
+   - Choose a key from F13 to F24.
+   - Enable or disable the AutoStart option.
+
+3. **Save configuration**  
+   After making changes, click **Save**. The new settings apply immediately and are stored automatically in the `~/.stay_alive_config.json` file.
+
+4. **Enable AutoStart**  
+   When the **AutoStart** option is enabled, the app will automatically start on the next system boot.
+
+---
+
+## Technical Details
+
+### Configuration File:
+- **Path:**
+  ```plaintext
+  %USERPROFILE%\.stay_alive_config.json
+  ```
+  This file stores the interval, selected key, and AutoStart preferences in JSON format.
+
+### Example Configuration File:
+```json
+{
+  "interval": 120,
+  "key_code": 114,
+  "auto_start": true
+}
+```
+
+### Supported F-Keys:
+The app supports F-keys ranging from F13 to F24 for simulation. Key selection works via a mapping in the code.
+
+---
+
+## How to Use
+
+1. **Start the app:**  
+   Double-click the executable file to start the application. A tray icon will appear in your system tray.
+
+2. **Modify settings:**
+   - Right-click the tray icon → Select **Settings**.
+   - In the GUI window, configure the interval, select a key, and enable/disable AutoStart.
+
+3. **Stop the app:**  
+   Right-click the tray icon and choose **Exit** to terminate the application.
 
 ---
 
 ## Notes
 
-- The simulated key press occurs in the background and does not affect your work or input.
-- Frequent key simulation (e.g., a very low interval) might cause unexpected behavior in some programs. Adjust the interval accordingly.
-
-Enjoy uninterrupted focus while staying "active"!
+- Changes made in the configuration take effect immediately without requiring a restart.
+- The automatic key simulation runs in the background and does not interfere with normal usage of your computer.
+- The GUI settings editor includes a dropdown for key selection and provides warnings for invalid inputs (e.g., non-numeric intervals).
 
 ---
+
+## Changelog
+
+### What's new in the current version:
+- **AutoStart Support:** Added the capability to launch the app automatically on each system startup.
+- **GUI Settings:** A fully interactive graphical interface for live configuration adjustments.
+- **Improved Key Selection:** Includes a dropdown for an easier selection of function keys.
+
+---
+
+If you need additional adjustments or further explanations, feel free to ask! 😊
