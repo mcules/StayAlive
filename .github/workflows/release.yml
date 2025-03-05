@@ -57,7 +57,7 @@ jobs:
 
       - name: Build Windows Executable
         run: |
-          GOOS=windows GOARCH=amd64 go build -ldflags="-H windowsgui" -o stayAlive.exe main.go
+          GOOS=windows GOARCH=amd64 go build -ldflags="-H windowsgui -extldflags=-static" -o stayAlive.exe main.go
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
