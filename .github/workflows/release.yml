@@ -30,9 +30,11 @@ jobs:
 
       - name: Check for rsrc.syso
         run: |
-          echo "Listing project files:"
-          dir
-          if not exist "rsrc.syso" (echo "rsrc.syso is missing" && exit 1)
+          echo "Checking if rsrc.syso exists..."
+          if [ ! -f "rsrc.syso" ]; then
+            echo "Error: rsrc.syso is missing!"
+            exit 1
+          fi
 
       - name: Get short commit SHA
         id: commit
