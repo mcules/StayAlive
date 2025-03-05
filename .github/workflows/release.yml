@@ -32,7 +32,7 @@ jobs:
 
       - name: Define release tag
         id: version
-        run: echo "tag_name=v1.0-${{ env.date }}-${{ env.sha_short }}" >> $GITHUB_ENV
+        run: echo "tag_name=v${{ env.date }}-${{ env.sha_short }}" >> $GITHUB_ENV
 
       - name: Create Git Tag
         run: |
