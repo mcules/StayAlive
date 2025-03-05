@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	_ "embed"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -70,6 +71,9 @@ var (
 		return mapping
 	}()
 )
+
+//go:embed favicon.ico
+var favicon []byte
 
 func init() {
 	reverseKeyMapping = make(map[int]string)
@@ -209,7 +213,7 @@ func reloadService() {
 }
 
 func onReady() {
-	systray.SetIcon(getIconData())
+	systray.SetIcon(favicon)
 	systray.SetTitle("Stay Alive")
 	systray.SetTooltip("Stay Alive")
 
@@ -368,14 +372,6 @@ func getKeyString(code int) (string, error) {
 		return key, nil
 	}
 	return "", errors.New("unknown Keycode")
-}
-
-func getIconData() []byte {
-	data, err := os.ReadFile("favicon.ico")
-	if err != nil {
-		log.Fatal("Icon error:", err)
-	}
-	return data
 }
 
 func enableAutoStart() error {
