@@ -11,7 +11,7 @@ permissions:
 jobs:
   release:
     name: Build and Release for Windows
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -22,17 +22,29 @@ jobs:
         with:
           go-version: '1.24'
 
+      - name: Generate rsrc.syso
+        run: |
+          wget https://github.com/akavel/rsrc/releases/latest/download/rsrc_linux_amd64 -O rsrc
+          chmod +x rsrc
+          ./rsrc -ico favicon.ico
+
+      - name: Check for rsrc.syso
+        run: |
+          echo "Listing project files:"
+          dir
+          if not exist "rsrc.syso" (echo "rsrc.syso is missing" && exit 1)
+
       - name: Get short commit SHA
         id: commit
-        run: echo sha_short=$(git rev-parse --short HEAD) >> $env:GITHUB_ENV
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Get current date
         id: date
-        run: echo date=$(Get-Date -Format yyyyMMdd) >> $env:GITHUB_ENV
+        run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
       - name: Define release tag
         id: version
-        run: echo tag_name=v${{ env.date }}-${{ env.sha_short }} >> $env:GITHUB_ENV
+        run: echo "tag_name=v${{ env.date }}-${{ env.sha_short }}" >> $GITHUB_ENV
 
       - name: Create Git Tag
         run: |
@@ -43,9 +55,7 @@ jobs:
 
       - name: Build Windows Executable
         run: |
-          echo "Building executable with the following files:"
-          dir
-          go build -ldflags="-H windowsgui" -o stayAlive.exe main.go
+          GOOS=windows GOARCH=amd64 go build -ldflags="-H windowsgui" -o stayAlive.exe main.go
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
